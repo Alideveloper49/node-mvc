@@ -1,10 +1,10 @@
 const mailConfig = {
   host: 'smtp.domain.email',
-  port: 587,
-  secure: false, // true for port 465, false for other ports
+  port: 2525,
+  //secure: false, // true for port 465, false for other ports
   auth: {
-    user: 'my_user',
-    pass: 'my_password'
+    user: 'dc502d68c93656',
+    pass: 'bf6be3f8b2f495'
   }
 }
 

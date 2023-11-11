@@ -1,2 +1,7 @@
 const app = require('./config/app')
-app.listen(app.get('port'), () => console.log(`Server running on port ${app.get('port')}`))
+
+const host = 'http://localhost'
+
+app.listen(app.get('port'), () =>
+    console.log(`Server is listening on http://${host}:${app.get('port')}`)
+)

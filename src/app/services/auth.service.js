@@ -2,10 +2,16 @@ const UserRepository = require('../repositories/user.repository')
 const HttpResponse = require('../helpers/http-response')
 const bcrypt = require('bcryptjs')
 const JwtHelper = require('../helpers/jwt-helper')
+const validate = require('../helpers/validate')
+const mailService = require('./mail.service')
 
 class AuthService {
-  async auth (login, password) {
-    const user = await UserRepository.findOne({ login }).select('+password')
+  async auth(email, password) {
+    const isValid = validate.validateEmail(email);
+
+    if (!isValid) return HttpResponse.forbiden(null, 'Invalid email address')
+
+    const user = await UserRepository.findOne({ email }).select('+password')
 
     if (!user) return HttpResponse.forbiden(user, 'User not found')
 
@@ -19,15 +25,22 @@ class AuthService {
     return HttpResponse.success({ user, token })
   }
 
-  async register (name, login, password) {
+  async register(first_name, last_name, phone, email, password) {
+
+    const isValid = validate.validateEmail(email);
+
+    if (!isValid) return HttpResponse.badRequest(null, 'Invalid email address')
+
     const checkExists = await UserRepository.findOne({ email })
 
     if (checkExists) return HttpResponse.forbiden(null, 'User already exists')
 
-    const user = await UserRepository.create({ name, login, password })
+    const user = await UserRepository.create({ first_name, last_name, phone, email, password })
     user.password = undefined
 
-    const token = JwtHelper.generateToken(user.id)
+    const token = JwtHelper.generateToken(user.id);
+
+   // await mailService.send(email);
 
     return HttpResponse.success({ user, token })
   }
