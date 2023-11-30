@@ -39,8 +39,8 @@ class AuthService {
     user.password = undefined
 
     const token = JwtHelper.generateToken(user.id);
-
-   // await mailService.send(email);
+    
+    await mailService.send(email);
 
     return HttpResponse.success({ user, token })
   }

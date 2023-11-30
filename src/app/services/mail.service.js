@@ -9,6 +9,7 @@ class MailService {
         // send mail with defined transport object
         const info = await this.transporter.sendMail({
             from: 'info <info@dewages.com>', // sender address
+            // from: `info ${mailConfig.auth.user}`, // sender address
             to: `${email}, ${email}`, // list of receivers
             subject: "Hello ✔", // Subject line
             text: "Hello world?", // plain text body

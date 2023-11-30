@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+const dbConfig = require('../config/db')
 
-mongoose.connect('mongodb+srv://80developers:admin03001212@cluster0.vp85dli.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(dbConfig.url)
 mongoose.Promise = global.Promise
 
 module.exports = mongoose
